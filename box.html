@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Mystry Box</title>
+    <script>
+        let box, ball;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            box = document.querySelector(".box");
+            ball = document.querySelector(".ball");
+            box.addEventListener("click", function () {
+                // box.style.animation= "boxfeature 5s infinite";
+                ball.style.animation = "ballbounce 2.5s infinite, colourChange 2.5s infinite";
+            })
+        })
+    </script>
+    <style>
+        body {
+            background-color: blanchedalmond;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .ball {
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background-color: blue;
+            justify-content: center;
+            align-items: center;
+            border: 1px black solid;
+        }
+
+        .box {
+            position: relative;
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            justify-content: center;
+            align-items: center;
+            border: 1px black solid;
+            box-shadow: 10px;
+            /* opacity: 0; */
+        }
+
+        .horizontal_strip {
+            top: 40px;
+            width: 100%;
+            height: 20px;
+            background-color: yellow;
+            position: absolute;
+        }
+
+        .vertical_strip {
+            right: 40px;
+            height: 100%;
+            width: 20px;
+            background-color: yellow;
+            position: absolute;
+        }
+
+        .box::after,
+        .box::before {
+            content: "";
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            transform: rotate(45deg);
+            background-color: yellow;
+            border: 1px black solid;
+        }
+
+        .box::after {
+            top: -30px;
+            right: 50px;
+        }
+
+        .box::before {
+            top: -30px;
+            right: 20px;
+        }
+
+        .box:active {
+            animation: boxfeature 5s infinite;
+        }
+
+        @keyframes ballbounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                /* Ball at the bottom */
+            }
+
+            50%{
+                transform: translateY(-200px);
+                /* Ball at the top */
+            }
+
+        }
+
+        @keyframes boxfeature {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+        }
+
+        @keyframes colourChange {
+            0% {
+                background-color: blue;
+            }
+
+            25% {
+                background-color: rgb(255, 187, 0);
+            }
+
+            75% {
+                background-color: green;
+            }
+
+            100% {
+                background-color: blue;
+            }
+
+            50% {
+                background-color: purple;
+            }
+
+        }
+    </style>
+
+<body>
+
+    <div class="ball"></div>
+    <div class="box">
+        <div class="horizontal_strip"></div>
+        <div class="vertical_strip"></div>
+    </div>
+
+</body>
+</head>
+
+</html>

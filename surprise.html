@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+    <title>Ball Inside Box</title>
+</head>
+<style>
+body{
+ justify-content: center;
+ align-items: center;
+ background-color: black;
+ display: flex;
+ height: 100vh;
+ overflow: hidden;
+}
+.heart{
+    height: 200px;
+    width: 200px;
+    background-color: bisque;
+    /* transform: rotate(75deg); */
+    position: relative;
+    animation: heartbeat 5s infinite;
+}
+.ball{
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: red;
+    left:50px;
+    top:100px;
+    animation: ballbounce 5s infinite, colourChange 5s infinite;
+}
+
+@keyframes heartbeat {
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(90deg);
+    }
+    75%{
+        transform: rotate(270deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+    50%{
+        transform: rotate(180deg);
+    }
+    
+}
+@keyframes ballbounce {
+    0%,50%,100% {
+    transform: translateY(0); /* Ball at the bottom */
+  }
+  
+  25%,75% {
+    transform: translateY(-100px); /* Ball at the top */
+  }
+}
+
+@keyframes colourChange {
+    0%{
+        background-color: red;
+    }
+    25%{
+        background-color: rgb(255, 187, 0);
+    }
+    75%{
+        background-color: rgb(246, 61, 0);
+    }
+    100%{
+        background-color: red;
+    }
+    50%{
+        background-color: orange;
+    }
+    
+}
+</style>
+<body>
+    <div class="heart"> 
+        <div class="ball"></div>
+    </div>
+    
+</body>
+</html>

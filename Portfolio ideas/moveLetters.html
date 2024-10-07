@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Spiral letters
+        </title>
+    </head>
+    <script>
+
+    </script>
+    <style>
+        body {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: black;
+        }
+        .loader{
+            transform: rotateX(70deg);
+        }
+        .loader .element{
+            display: block;
+            border-left: 5px solid rgb(35,199,231);
+            border-right: 5px solid rgb(35,199,231);
+            border-top: dotted 2px rgb(29,146,170);
+            width: 10rem;
+            height: 1rem;
+            margin-top: 0.5rem;
+            perspective: 1000px;
+            animation: rotate 5s infinite linear;
+            animation-delay: calc(var(--i)*0.2s);
+        }
+        @keyframes rotate {
+            100%{
+                transform: rotateY(360deg);
+            } 
+        }
+    </style>
+    <body>
+        <div class="loader">
+            <span style = "--i:1" class="element"></span>
+            <span style = "--i:2" class="element"></span>
+            <span style = "--i:3" class="element"></span>
+            <span style = "--i:4" class="element"></span>
+            <span style = "--i:5" class="element"></span>
+            <span style = "--i:6" class="element"></span>
+            <span style = "--i:7" class="element"></span>
+            <span style = "--i:8" class="element"></span>
+            <span style = "--i:9" class="element"></span>
+            <span style = "--i:10" class="element"></span>
+        </div>
+    </body>
+</html>

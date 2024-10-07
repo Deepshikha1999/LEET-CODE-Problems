@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rolling Dice</title>
+    <script>
+
+        function getRandNumGenerator() {
+            return Math.floor(Math.random() * 6);
+        }
+        let DiceContent = ["|", "||", "|||", "||||", "|||||", "||||||"];
+        let dice,diceCont;
+        document.addEventListener("DOMContentLoaded", function () {
+            dice = document.querySelector(".Dice");
+            diceCont = document.querySelector(".dice-content");
+            let number = getRandNumGenerator();
+            diceCont.textContent = DiceContent[number];
+            console.log(DiceContent[number])
+            // dice.style.content = DiceContent[number].toString();
+            // dice.addEventListener("click",function(){
+            //     let number = getRandNumGenerator();
+            //     console.log(DiceContent[number])
+            //     dice.style.animation = "rotateDice 5s linear";
+            //     dice.style.content = DiceContent[number];
+            // })
+        })
+        function change() {
+            let number = getRandNumGenerator();
+            console.log(DiceContent[number])
+            dice.style.animation = "rotateDice 2s ease-in-out forwards";
+            dice.addEventListener("animationend", function () {
+                dice.style.animation = ""; // Reset animation
+                diceCont.textContent = DiceContent[number];
+            });
+            // dice.style["animation-fill-mode"] = "both";
+            // dice.style.content = DiceContent[number].toString();
+        }
+    </script>
+    <style>
+        body {
+            width: 100%;
+            max-width: 100%;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .Dice {
+            height: 100px;
+            width: 100px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            background-color: black;
+            border-radius: 10%;
+            /* animation: rotateDice 5s linear; */
+        }
+        .dice-content{
+            color: white;
+            font-size: 50px;
+        }
+
+        @keyframes rotateDice {
+
+            0%{
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+
+            35% {
+                transform: rotateX(45deg) rotateY(45deg) rotateZ(45deg);
+            }
+
+            70% {
+                transform: rotateX(90deg) rotateY(90deg) rotateZ(90deg);
+            }
+
+            100%{
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+    </style>
+
+<body>
+    <div class="Dice" onclick="change()">
+        <div class="dice-content"></div>
+    </div>
+</body>
+</head>
+
+</html>

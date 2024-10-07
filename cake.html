@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cake prank</title>
+    <script>
+        function getRandNumGenerator() {
+            return Math.floor(Math.random() * 1000);
+        }
+        var cake;
+        var caketext,caketextdiv;
+        var ghost,surprise;
+        document.addEventListener("DOMContentLoaded", function () {
+           cake = document.querySelector(".cake");
+           ghost = document.querySelector(".ghostImg");
+           caketextdiv = document.querySelector(".cake-text");
+           surprise = document.querySelector(".surprise");
+           console.log(ghost.clientHeight)
+           console.log(ghost.clientWidth)
+          
+            var lastValue=0;
+            cake.addEventListener("mouseover", function () {
+                var randonValue = getRandNumGenerator();
+                var posx = Math.floor(Math.random()*2);
+                var posy = Math.floor(Math.random()*2);
+                // var signx="-",signy="-";
+                // console.log(pos)
+                if (Math.abs(randonValue-lastValue) < 100) {
+                    randonValue += 150;
+                }
+                console.log(randonValue)
+                
+                // console.log(posx + " " + posy)
+                
+                if (randonValue % 2 == 0 && randonValue<=625){
+                    if(cake.clientHeight == ghost.clientHeight)
+                    randonValue = randonValue * -1;
+
+                    cake.style.transform = 'translateY(' + randonValue + 'px)';
+                }
+                else{
+                    if(cake.clientWidth == ghost.clientWidth)
+                    randonValue = randonValue * -1;
+
+                    cake.style.transform = 'translateX(' + randonValue + 'px)';
+                }
+                lastValue = randonValue;
+            });
+            // cake.addEventListener("mouseout",function(){
+            //     cake.style.transform = 'translateY(0px)';
+            // });
+        })
+        function changeText(){
+            caketext = document.getElementById("caketext")
+            // caketext.innerHTML = "Surprise";
+            // cake.style.width='100px';
+            caketext.style.transition = 'opacity 0.5s ease-in-out';
+            caketext.style.opacity='0';
+            ghost.style.transition='opacity 5s ease-in-out';
+            ghost.style.opacity="1";
+            setTimeout(function(){
+                ghost.style.transition='opacity 2s ease-in-out';
+                ghost.style.opacity="0";
+                surprise.style.transition='opacity 5s ease-in-out';
+                surprise.style.opacity="1";
+
+            },15000);
+        }
+    </script>
+    <style>
+        body {
+            /* margin-top: auto;
+            margin-left: auto; */
+            background-color: black;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .cake {
+            /* height: 50px;
+            width: 250px; */
+            top: 0%;
+            left:0%;
+            /* width: 100%;
+            height: 100%; */
+            position: absolute;
+            text-align: center;
+            /* background-color: red; */
+            /* border-radius: 50%; */
+            /*transition: transform 0.3s ease-in-out; /* Add smooth transition */
+        }
+        .cake-text{
+            color: white;
+            font-family: fantasy;
+        }
+        .ghost{
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        img{
+            width: 100%;
+            height: 100%;
+            /* background-image: url("ghost.gif"); */
+            /* position: absolute; */
+            opacity: 0;
+        }
+        .surprise{
+            position: absolute;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="ghost"> 
+        <!-- <img class="christmas_wish" src="https://cdn.dribbble.com/users/688785/screenshots/3054046/ghost_1.gif"> -->
+        <img class="surprise" src="https://i.pinimg.com/originals/99/5b/a7/995ba747b87a71ff785263d2561fa8cf.gif">
+        <img class="ghostImg" src="https://i.pinimg.com/originals/94/ff/74/94ff7463a1574221ba6d4ada2c997e0b.gif">
+    <!-- <div class="ghostImg"></div> -->
+    <div class="cake">
+        <div class = "cake-text" onclick="changeText()" id = "caketext">
+            Click me to get Surprise
+        </div>
+    </div> 
+    </div>
+   
+</body>
+
+</html>

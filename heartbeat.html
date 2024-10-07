@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+    <title>HeartBeart</title>
+</head>
+<style>
+body{
+ margin-top: 200px;
+ margin-left: 200px;
+}
+.heart{
+    height: 200px;
+    width: 200px;
+    background-color: rgb(11, 155, 30);
+    transform: rotate(45deg);
+    position: relative;
+    animation: heartbeat 1s infinite;
+}
+.heart::after,.heart::before{
+    content: "";
+    height: 200px;
+    width: 200px;
+    background-color: rgb(11, 155, 30);
+    border-radius: 50%;
+    position: absolute;
+}
+.heart::after{
+    top:-100px;
+    right: 0;
+}
+.heart::before{
+    top:0;
+    left:-100px
+}
+@keyframes heartbeat {
+    0%{
+        transform: scale(1) rotate(45deg);
+    }
+    100%{
+        transform: scale(1) rotate(45deg);
+    }
+    50%{
+        transform: scale(1.2) rotate(45deg);
+    }
+    
+}
+</style>
+<body>
+    <div class="heart">
+
+    </div>
+</body>
+</html>

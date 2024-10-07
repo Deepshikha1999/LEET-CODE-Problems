@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <script>
+        const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const bg = ['https://i.pinimg.com/736x/55/f1/24/55f1240745dff6e4a8b6bc5193688968.jpg',
+            'https://i.pinimg.com/736x/d0/a7/19/d0a719b80bd976a0c7dd9ec22c694af6.jpg',
+            'https://i.pinimg.com/originals/2a/43/22/2a43222defec4ec5ed10c291dfc9ed2f.gif',
+            'https://i.pinimg.com/564x/c5/bb/5b/c5bb5b7c54b9318d88069309b9443dfb.jpg',
+            'https://i.pinimg.com/564x/dc/38/98/dc389856f1f9fadbcb387100433ffd9d.jpg',
+            'https://i.pinimg.com/564x/5c/c4/65/5cc4656628ac84df6a081c3fc945fd52.jpg',
+            'https://i.pinimg.com/564x/40/cd/ab/40cdabb974dbc6eefcd57d2b44396b32.jpg',
+            'https://i.pinimg.com/564x/34/00/65/34006536501e0d70ab880cfa7e6d19a6.jpg',
+            'https://i.pinimg.com/564x/79/83/80/79838046e2279b0fa5ac13d5d893b433.jpg',
+            'https://i.pinimg.com/564x/f3/cf/9a/f3cf9a582b134750f6e37d4d35824d7a.jpg',
+            'https://i.pinimg.com/564x/c5/df/d3/c5dfd347faace9ec2780b2bb3ad5a7be.jpg',
+            'https://i.pinimg.com/564x/45/1a/86/451a867cf32483a1a635fa654bfa05e6.jpg',
+            'https://i.pinimg.com/564x/44/60/39/446039edb149a160bc889a8a084fc14d.jpg',
+            'https://i.pinimg.com/564x/74/e7/a7/74e7a761b419ccfaa7c95ccb409663e6.jpg',
+            'https://i.pinimg.com/564x/b2/18/4b/b2184be19087f087fef60d21595d1698.jpg'];
+
+        let getMonthDetails = (currDate, yearMap) => {
+            console.log("Here")
+            let currMonthMap = {};
+            let prevDate = new Date(currDate);
+            let nextDate = new Date(currDate);
+            let flag = true;
+
+            currMonthMap[currDate.getDate()] = week[currDate.getDay()];
+
+            while (flag) {
+                prevDate.setDate(prevDate.getDate() - 1);
+                nextDate.setDate(nextDate.getDate() + 1);
+
+                if (prevDate.getMonth() != currDate.getMonth() && nextDate.getMonth() != currDate.getMonth())
+                    break;
+
+                if (prevDate.getMonth() == currDate.getMonth()) currMonthMap[prevDate.getDate()] = week[prevDate.getDay()];
+
+                if (nextDate.getMonth() == currDate.getMonth()) currMonthMap[nextDate.getDate()] = week[nextDate.getDay()];
+            }
+
+            yearMap[months[currDate.getMonth()]] = currMonthMap;
+        }
+
+        let getFullCalendar = (year) => {
+            let currDate = new Date();
+            let yearMap = {};
+            currDate.setDate(1);
+            currDate.setFullYear(year)
+
+            let promises = [];
+            months.forEach(item => {
+                currDate.setMonth(months.indexOf(item));
+                promises.push(getMonthDetails(currDate, yearMap));
+            })
+            Promise.all(promises);
+            console.log("2024:  " + JSON.stringify(yearMap))
+            return yearMap;
+        }
+        let currentDate;
+        let fullCalendar;
+        let container;
+        let conainerName;
+        document.addEventListener("DOMContentLoaded", function () {
+            currentDate = new Date();
+            fullCalendar = getFullCalendar(currentDate.getFullYear());
+            container = document.querySelector(".month");
+            conainerName = document.querySelector(".monthName");
+            conainerName.textContent = months[currentDate.getMonth()] + " " + currentDate.getFullYear();
+            createDiv(container);
+            alotDate(fullCalendar, currentDate);
+        });
+
+        function createDiv(container) {
+            let start = 1;
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 7; j++) {
+                    let newDiv = document.createElement("div");
+                    newDiv.className = "weekdays";
+                    newDiv.id = "weekdays" + start;
+                    start++;
+                    container.appendChild(newDiv);
+                }
+            }
+        }
+
+        function alotDate(fullCalendar, currentDate) {
+            let ind = 1;
+            let start = 1;
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 7; j++) {
+                    let newDiv = document.getElementById("weekdays" + ind);
+                    ind++;
+                    newDiv.textContent = "";
+                    if (i == 0) {
+                        newDiv.textContent = week[j][0];
+                        newDiv.style.backgroundColor = "rgba(0, 0, 0, 0.541)";
+                    }
+                    else {
+                        if (fullCalendar[months[currentDate.getMonth()]][start] == week[j]) {
+                            // if(currentDate.getDate()==start)
+                            // newDiv.style.backgroundColor = "rgb(218, 218, 153)";
+                            newDiv.textContent = start;
+                            start++;
+                        }
+                    }
+                }
+            }
+        }
+
+        function gotToNextOrPrev(NextOrPrev) {
+            var randomNumber = Math.floor(Math.random() * 15);
+            console.log(randomNumber)
+            container.style.backgroundImage = "linear-gradient(to bottom, rgba(0,0,0,0),rgba(0,0,0,0.5)),url(" + bg[randomNumber] + ")";
+            let currYear = currentDate.getFullYear();
+            if (NextOrPrev == "NEXT") {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                if (currentDate.getFullYear() != currYear)
+                    fullCalendar = getFullCalendar(currentDate.getFullYear());
+                alotDate(fullCalendar, currentDate);
+            }
+
+            else {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                if (currentDate.getFullYear() != currYear)
+                    fullCalendar = getFullCalendar(currentDate.getFullYear());
+                alotDate(fullCalendar, currentDate);
+            }
+            conainerName.textContent = months[currentDate.getMonth()] + " " + currentDate.getFullYear();
+
+        }
+    </script>
+    <style>
+        body {
+            width: 100%;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .monthName {
+            font-size: xx-large;
+            align-items: center;
+            justify-content: center;
+            background-image: url("https://i.pinimg.com/564x/74/e7/a7/74e7a761b419ccfaa7c95ccb409663e6.jpg");
+            background-size: cover;
+            display: grid;
+            grid-template-rows: repeat(1, 1fr);
+            gap: 1rem;
+            position: relative;
+            padding: 2px;
+        }
+
+        .month {
+            font-weight: bold;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url("https://i.pinimg.com/564x/74/e7/a7/74e7a761b419ccfaa7c95ccb409663e6.jpg");
+            background-size: cover;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 1rem;
+            position: relative;
+            padding: 2px;
+        }
+
+        .weekdays {
+            border-radius: 10%;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(245, 245, 245, 0.3);
+            color: white;
+            box-shadow: 2px 2px 40px 0 black;
+        }
+
+        .weekdays:hover {
+            color: black;
+            background-color: beige;
+        }
+
+        .weekdays:active {
+            color: black;
+            background-color: rgb(218, 218, 153);
+        }
+
+        .movebut {
+            align-items: center;
+            justify-content: center;
+            background-image: url("https://i.pinimg.com/564x/74/e7/a7/74e7a761b419ccfaa7c95ccb409663e6.jpg");
+            background-size: cover;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            position: relative;
+            padding: 2px;
+        }
+
+        .arrow {
+            font-weight: bold;
+            margin: 5px;
+            padding: 10px;
+            text-align: center;
+            background-color: rgba(245, 245, 245, 0.469);
+        }
+
+        .arrow:hover {
+            background-color: beige;
+        }
+
+        .arrow:active {
+            background-color: rgb(218, 218, 153);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="year">
+        <div class="monthName"></div>
+        <div class="month"></div>
+        <div class="movebut">
+            <div class="arrow" id="left" onclick="gotToNextOrPrev('PREV')">Prev</div>
+            <div class="arrow" id="right" onclick="gotToNextOrPrev('NEXT')">Next</div>
+        </div>
+    </div>
+</body>
+
+</html>

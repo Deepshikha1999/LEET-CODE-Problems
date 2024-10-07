@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>clock motion</title>
+    </head>
+    <script>
+        let Circle,body,CircleDup;
+        let resize = ()=>{
+            let height = body.clientHeight;
+            let width = body.clientWidth;
+            Circle.style.height = height/2 + "px";
+            Circle.style.width = height/2 + "px";
+            CircleDup.style.height = height/2 + "px";
+            CircleDup.style.width = height/2 + "px";
+            CircleDup.style.top = height/2 + "px";
+        }
+        document.addEventListener("DOMContentLoaded",function(){
+            Circle = document.querySelector(".Circle");
+            CircleDup = document.querySelector(".CircleDup");
+            body = document.body;
+            resize()
+            window.addEventListener("resize", function (event) {
+                resize()
+            })
+        })
+    </script>
+    <style>
+        body{
+            height: 100vh;
+            width: 100%;
+            justify-items: left;
+            align-content: center;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .Circle{
+            background-color: bisque;
+            border-radius: 0% 100% 100% 0% / 56% 0% 100% 44% ;
+            position: absolute;
+            transform: rotate(-90deg);
+        }
+        .CircleDup{
+            background-color: bisque;
+            border-radius: 0% 100% 100% 0% / 56% 0% 100% 44% ;
+            position: relative;
+        }
+    </style>
+    <body>
+        <div class="Circle"></div>
+        <div class="CircleDup"></div>
+    </body>
+</html>

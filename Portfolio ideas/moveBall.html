@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>page design 1</title>
+    <script>
+        let body;
+        let ball,ball1, container;
+        let conheight, conwidth, coordBall;
+        let flag = true;
+        let resizeCal = () => {
+            container = document.querySelector(".container");
+            conwidth = container.clientWidth;
+            conheight = container.clientHeight;
+            coordBall = ball.getBoundingClientRect();
+            console.log("conwidth: " + conwidth);
+            console.log("conheight: " + conheight);
+            console.log("coordBall.x: " + coordBall.x);
+            console.log("coordBall.y: " + coordBall.y);
+        }
+
+        let ballfallfun = () => {
+            var styleSheet = document.styleSheets[0];
+            let ballfallx = `@keyframes ballfall {
+            0%{
+                transform: translateX(0);
+            }
+            20%{
+                transform: translateX(20%);
+            }
+            40%{
+                transform: translateX(40%);
+            }
+            60%{
+                transform: translateX(60%);
+            }
+            80%{
+                transform: translateX(80%);
+            }
+            100%{
+                transform: translateX(100%);
+            }
+        }`;
+
+            let ballfally = `@keyframes ballfall {
+            0%{
+                transform: translateY(0);
+            }
+            20%{
+                transform: translateY(20%);
+            }
+            40%{
+                transform: translateY(40%);
+            }
+            60%{
+                transform: translateY(60%);
+            }
+            80%{
+                transform: translateY(80%);
+            }
+            100%{
+                transform: translateY(100%);
+            }
+        }`;
+
+            if (styleSheet.insertRule) {
+                styleSheet.insertRule(ballfallx, styleSheet.cssRules.length);
+                styleSheet.insertRule(ballfally, styleSheet.cssRules.length);
+            } else if (styleSheet.addRule) {
+                styleSheet.addRule('customAnimation', ballfally);
+                styleSheet.addRule('customAnimation', ballfally);
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            body = document.body
+            ball = document.querySelector(".bulb");
+            ball1 = document.querySelector(".bulb1");
+            container = document.querySelector(".container");
+            resizeCal();
+            ballfallfun();
+            window.addEventListener("resize", function (event) {
+                resizeCal();
+                ballfallfun();
+            })
+
+            container.addEventListener("click",function(){
+                if(flag){
+                    //night
+                    ball.style.animation="circularMotion 4s linear 1 forwards";
+                    ball.style.transition="transform 0.5s ease-in-out";
+
+                    ball1.style.animation="reverseCircularMotion 4s linear 1 forwards";
+                    ball1.style.transition="transform 0.5s ease-in-out";
+
+                    setTimeout(function(){
+                        container.style.backgroundImage = "url('https://4kwallpapers.com/images/wallpapers/mountains-rocks-night-starry-sky-scenery-illustration-macos-6016x3384-3810.jpg')";
+                        container.style.transition="opacity 2s ease-in-out";
+
+                        body.style.backgroundColor = "rgb(16, 10, 69)";
+                        body.style.transition="opacity 2s ease-in-out";
+                    },3000)
+
+                    flag = false;
+                }
+                else{
+                    //day
+                    ball.style.animation="reverseCircularMotion 4s linear 1 forwards";
+                    ball.style.transition="transform 0.5s ease-in-out";
+
+                    ball1.style.animation="circularMotion 4s linear 1 forwards";
+                    ball1.style.transition="transform 0.5s ease-in-out";
+
+                    setTimeout(function(){
+                        container.style.backgroundImage = "url('https://img.freepik.com/premium-photo/international-mountain-day-drawing-illustration-mountain-vector-art-mountains-image-ai-generate_995887-6862.jpg')";
+                        container.style.transition="opacity 2s ease-in-out";
+
+                        body.style.backgroundColor = "rgb(163, 193, 253)";
+                        body.style.transition="opacity 2s ease-in-out";
+                    },3000)
+    
+                    flag = true;
+                }
+                
+                console.log("conwidth: " + conwidth);
+                console.log("conheight: " + conheight);
+                console.log("coordBall.x: " + coordBall.x);
+                console.log("coordBall.y: " + coordBall.y);
+            })
+        })
+
+
+
+    </script>
+    <style>
+        body {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: rgb(163, 193, 253);
+        }
+
+        .container {
+            width: clamp(500px, 80%, 100%);
+            height: 80%;
+            /* background-color: rgba(240, 78, 29,0.5); */
+            /* https://t3.ftcdn.net/jpg/01/10/29/88/360_F_110298800_d56umyVEHeJr4zpGj1zpSIzgQyZPBk1e.jpg */
+            background-image: url('https://img.freepik.com/premium-photo/international-mountain-day-drawing-illustration-mountain-vector-art-mountains-image-ai-generate_995887-6862.jpg');
+            background-size: cover;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            box-shadow: 2px 2px 40px 0 black;
+        }
+
+        .bulb {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            /* background-color: white; */
+            background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQArQMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAFAAMEBgcCAQj/xAA1EAABAwMCBQIEBQMFAQAAAAABAAIDBBEhBRIGIjFBURNxMmGBoSNCkcHRUnKxFBViguEk/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMNSSSQJJJdAIPAF21icZHdS4KfceiCOyElSYqUlEqWh3dkXpNKLrciABHQk9lIZpx8FW2n0a9rsRKLQj/Qgov8Atp8H9F4dNdbotDGhY+Fcv0IW+EIM4fp7h2UWSiI7LRp9Dt+QIXVaORfkQUSSnIUZ8RCttVpu2/KhNRRbQcIAbm2XJFlOmgt2UV7LIGkl6vECSSSQJJJehB6Ano2X7LmNlyiNJAXEYQe01MXWwjtBpxcRyrvTaEuLcK5aPpBkc1rW3cTjCAfp2kOdblKuOicJ1FYAWRER93uw1WvQuF6eiibPqIDngXEXZvv5KMS6nGD6dNa4GAEA2g4Oo4ADUSukI/K3lH8ovBpWmwYjpocf1Dd/lQHVVVKbNGPlldMFQ4gCVp8gICoZTtw2OMDwGhcmKklHNDE4fNgUAeqL7wb3sujHM5u4usPAQd1GhaZUjNO1t+8Z2oBqXBIcCaOUOHZjxY/qrBTCWN43SEgg4v0U0PHdyDG9Y4empnlk0LmO+YVU1HSnNvyL6KqYaesiMVTDvaR3H+FR+JuEzA181MPUg6m/Vnv/ACgwqtoS2/Kg1RAQThaPq2l7d1m/ZVPUKMtccIKw9iaIU+oiLSVDeLIG0kkkCXbBcrkJ6JtyEEmmiuUf02k3Wwh1BFucMK46JR7tmAgLaJp25zbNJva1lpOm0sGjQgvsawjtn0h490M4epYqGjdXzjmFxAP+Vuv0TUlQ+Z5ubk5ugPtlqq6YOlcBADgeU66sp4HlkY+E2JUCGYU1K22XBvnBKiSbnu33tfqEBRtaZngtu0A9AeylQTlst22u7rhCKfFiiEDwJB4QHI5Gyt/E690+I2ttjPlQGEgB4N/PhNV05fK0ZLQOx7oJbnGOQ3aMhetlAkaCMHvZDxK8scCbi3QqTQ1MchbFI0CQdD5QEWXObi3y7p02LeYYOMpAACwGE2Xg5B6IKPxjw42MOqqZn4LviaPyH+Flus6fsJ5V9DepDVMfC8BzXCxae4WXcYaKaOqljsCzqw+Qgxuvptu7CDTssrnrFLtc/Cq1ZFYnCAW4WK8TsjbFNIPWqZTNuQorOqIUbbuCA5pUN3DHdaFw5RF742taSTgBU3RYruGO61Tgym/GMjrBsMZfcj6D7kIJWty+gGUzR+HGA1n7n6lRqSK5LicDqo2pzetV7gTtPwgm9gidHNE2l9MAl5Nyb46IOo2C+1wOM5XbQH3d3amnXMnOcE+FNZEDb0xkNsT2PugULBuybZGUTo2M9Q2kue3a6iRRB+ADhPNgB23IZnJOEBWNkhdYAFnfcoFa7ZUENHXwpZn9CAMZc9lGjLJ5TdwaRnn7oG2Hkd8glC4slYcXCksij9F0j2WAPUG32UDeHOs1obe/fsgOOqxG5rr8oGfmpGxssBaMbmqtOeQNoJIHZEdNqZQwB5aWMHW2UEaR74Z7tuHNPVdcYUIrNJFQG/iRZP8AaeqJTU0FW4Si/wA+yf2+vFJBI0Brmbf1QYDr1KA56o+oxWJwtQ4kpTG97HDmaSD9FnerR2ugrMzbOUc9VMqRZyhu6oO2IpQjmCFsRWh+IILjoTLuHutX4Zjto2oSAZ2NaP1WV6CeYe62Dg5rZNJrWEXwP3QVCYkzlx637dlOpXY+qZ1CJsFfLHJg7jtASpyxsrXXNroDrmcrJrHa0Zt+ZGKQB0LLW3AdLWv7ocKmN1EG7eYbQnqSVjXBvN73wUBiSIRhp5RfsCoVXI3aDgg+FzMHOjJaScfUKI5nrMDDuJBugn0VIXsLpJC5rz+idbp1pGva53gELiITwAWuW3wAOiLUpuxu43KDl8O2ANIsbfRBDH6ZLSOb5qymzxYqNNQxSc773He6AJDC6QhgF3dh5UmGN8bnFzCwNzeyk0cTWVJLTy2NlJq4y+EggkEdkAl1TK2YyRuIJ7eUW0175AXuPaxHzQYtPqBrhm6OUEQjj3XJc7JQZnxvAGajVAdN5P6rLNZbl61vj8j/AHOot8v8LJtaOXoKpVjmUJ3VT6v4ioDuqD1nVE6J3MELaVPpHcwQXbQ32cPda9wJODHUxWJ3RbgB8j/6sU0eazh7rUeCq9sFdTvcbMPK72OED3E8Tm1rperd1seUNaTtBFj4Vw1rTQH1DACfUeX+1+wVUFJIzeLENa6xB6oH4J3t2NLiQRYjwi1O94a7BdYZvbByhMdPMInusRYi4/dS6asIjfDe29v3sgL0Upe67n3wRZS45Y4qoMmaAO1ygkTJYxG48gceXKmTzNkY0uy9riCfI8oLGx8YYCByjAT8T2g9eqFafO6YWDmlgHUeURjBJsOyCaC04aE44bgW+VEY8WtlOsftIv1KBuaNkJ3XI5VxSTveSH2sBhP1AEsRBUOGmdHIHh+XYI8BB5PHGLuvd9uXvdSqAEMyLC102abcWEn4TdP1s7aOjmqD+RhP17IMt42qBJqNU4dN5H6YWW6w+5crvxDUXc67rnuVn2qyXJ9ygBVR5lCd1UmoPMoruqBA5UqndYhRE9GcoLHpk1nBXvQKsDZc3+qzSil2uHlWrR6zbtyg3mnmdq2kxTMN5orNf9OhQetpzu5wAdwN/KF8H65/pZ+ckwyDbIPl5HsrlqUTDGx8YDgRdrx0cEFdqJo6OEOeC4vwQ1QKJ7KyQiU7SG4v1Nvmi1dRf6mENYB56dD4QeKgeyo5hgO65CAo5zZGBpcRsHQDofmo7pLuy7N8junAGifbutsA5s86Is0mKW0rTe46Hsgd0Oe7PTHkko01hILrG/YJnTqKOBrTtG7oSFPcAzlBugbY0Mbcm5XreY3PQdl4617u+g8rwOdtG0C3ugfdILZGB2XA6h3cpsXceZw9gnWtva/boEEloG1VPjvUxFTNo2OyeaT5eArDqFdHp1E6onIxhrfJ7BY/xJqz6iaWV77uc4koK5rtXdzs/dUvUJbk5RfVarc5+VW6uS5KCJM7KZK6eblcIEumnK5XoQS4H2KNUFVtIVdY6xU2nmLe6DRNH1ItIsVpfDGvxGIUdYd0Djynr6Z/hYXQVpaRlWrS9ULS3myg2SqonxNL4nOcw5a5hwQhYaS4v3WZfINkL4e4okpmiN59SA/FG79vCtMTaDVGB1E9rXu+KM4d+ndBEjjB5wBc9XE2U6mdzXwLYwoj6CopnAOBc0dwE4xsgdcgi/yQF2yOA+K1s+6eD9zeihU7jctsTbAT934wUHcjj0GCm9zz36roRPfmxUhlKer7Ad0HETST8Iuu6qphoYHT1Lw1rRgeT8h5Q7VOIKHTGlkbhNMB8LTge5Wd8Q8RzVkhdNJcD4QOg9kEriviJ1dMXE2jaLMbfoFnWrV+4nK71TUy4nKrNdVlzjlAzW1G4lCpX3Xc0pJOVGcUHJOV4kkgSSSSD0HKdY+yZXoQEIJ9tsotR1paRzKuNfZSYp9pQXmg1UttzfdWOg1tzQ077W6ZWYQVe1EqfUdtsoNr0zjSrhDWvlbK3xJn79Ucg4xo5LCejt82OB+xCwun1Yj8xU+LWiPzlBuMfFGlCx2StP8AaP5Xr+LdMaMMld/1H8rFW63/AMyvH62bfGUGu1XG8TB/81O3+57v2CrOrcW1VU3bJOQ3+lh2g/os/m1on85Q6o1a/wCYoLNX6yXAjf8AdVyu1Mvvz/dCajUNxOUOmqr3QSqur3Hqhc0u49VxJLdMucgTim16V4gSSSSBJJJIEkkkg9XTSbpJIHWuPlPskcO68SQSWTP8p9k8n9SSSB0TyeV46eS3VJJA0+eS3xKPJK/ykkgjve7OUw5xISSQNklcpJIEkkkgSSSSD//Z');
+            background-position: center;
+            background-size: 300%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            /* animation: circularMotion 2s linear 1 forwards;
+            transition: transform 0.5s ease-in-out; */
+            box-shadow: 2px 2px 40px 0 black;
+            opacity: 0;
+            /* cursor: grab; */
+        }
+
+        .bulb1 {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgb(241, 198, 123);
+            /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUb6n0QldTjCpDWDQVQHZEE26NIPpE-xkwNg&usqp=CAU');
+            background-position: center;
+            background-size: 300%; */
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            position: absolute;
+            transform: rotate(-90deg) translateX(180px) rotate(90deg);
+            /* animation: reverseCircularMotion 2s linear 1 forwards;
+            transition: transform 0.5s ease-in-out; */
+            box-shadow: 2px 2px 40px 0 rgb(238, 54, 54);
+            /* cursor: grab; */
+        }
+
+        @keyframes circularMotion {
+            0% {
+                transform: rotate(0deg) translateX(180px) rotate(0deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotate(-90deg) translateX(180px) rotate(90deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes reverseCircularMotion {
+            0% {
+                transform: rotate(-90deg) translateX(180px) rotate(-90deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(-180deg) translateX(180px) rotate(-180deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="bulb1"></div>
+        <div class="bulb"></div>
+       
+    </div>
+</body>
+
+</html>

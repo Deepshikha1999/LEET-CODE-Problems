@@ -1,0 +1,82 @@
+var solveNQueens = function(n) {
+    for(let i=0;i<n;i++){
+        let arr = Array.from({ length: n }, () => Array(n).fill(""))
+        fillRow(arr,0,i,n,".")
+        fillColumn(arr,0,i,n,".")
+        fillLeftDiagonal(arr,0,i,n,".")
+        fillRightDiagonal(arr,0,i,n,".")
+        arr[0][i]="Q";
+        let totalQueens = 1
+        let fillQ=fillQueens(arr,1,0,i,totalQueens,n);
+        console.log("Q",totalQueens)
+    }
+    return false;
+};
+
+let fillQueens = (arr,x,x1,y1,totalQueens,n)=>{
+    console.log("x: " ,x)
+    if(x==n){
+        console.log(arr)
+        return
+    }
+    else{
+        for(let i=0;i<n;i++){
+            // console.log("here",arr);
+            if(arr[x][i]==""){
+                let totalQ = totalQueens+1;
+                // console.log(x,i)
+                fillRow(arr,x,i,n,".")
+                fillColumn(arr,x,i,n,".")
+                fillLeftDiagonal(arr,x,i,n,".")
+                fillRightDiagonal(arr,x,i,n,".")
+                arr[x][i]="Q";
+                if (!fillQueens(arr, (x + 1), totalQ, n)) {
+                    console.log("QQ",totalQ)
+                    fillRow(arr, x, i, n, "")
+                    fillColumn(arr, x, i, n, "")
+                    fillLeftDiagonal(arr, x, i, n, "")
+                    fillRightDiagonal(arr, x, i, n, "")
+                    arr[x][i] = "";
+                    fillRow(arr, x1, y1, n, ".")
+                    fillColumn(arr, x1, y1, n, ".")
+                    fillLeftDiagonal(arr, x1, y1, n, ".")
+                    fillRightDiagonal(arr, x1, y1, n, ".")
+                    arr[x1][y1] = "Q";
+                }
+                else
+                return;
+            }
+        }
+        return false;
+    }
+}
+
+let fillRow = (arr,i,j,n,value)=>{
+    for(let m=0;m<n;m++){
+        if(j!=m)
+        arr[i][m]= value
+    }
+}
+
+let fillColumn = (arr,i,j,n,value)=>{
+    for(let m=0;m<n;m++){
+        if(i!=m)
+        arr[m][j]= value
+    }
+}
+
+let fillLeftDiagonal = (arr,i,j,n,value)=>{
+    let sumOfDiagonal = i+j;
+    for(let m=0;m<n;m++){
+        if(Math.abs(sumOfDiagonal-m)<=(n-1) && i!=m && j!=Math.abs(sumOfDiagonal-m))
+        arr[m][(Math.abs(sumOfDiagonal-m))]= value
+    }
+}
+
+let fillRightDiagonal = (arr,i,j,n,value)=>{
+    let diffOfDiagonal = Math.abs(i-j);
+    for(let m=0;m<n;m++){
+        if(Math.abs(diffOfDiagonal+m)<=(n-1) && i!=m && j!=Math.abs(diffOfDiagonal+m))
+        arr[m][(Math.abs(diffOfDiagonal+m))]= value;
+    }
+}
